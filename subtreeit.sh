@@ -7,6 +7,8 @@ subtreeit() {
   git fetch $remote
   [[ -d $remote ]] ||
     git read-tree --prefix=$remote/ -u $remote/$branch
+  git rev-parse --quiet --verify refs/heads/$remote ||
+    git branch $remote $remote/$branch
 }
 
 subtreeit swift swift
