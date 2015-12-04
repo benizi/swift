@@ -1,0 +1,76 @@
+# Check basic parsing functionality.
+#
+# RUN: %{llbuild} buildsystem parse %s > %t.out 2> %t.err
+# RUN: %{FileCheck} < %t.out %s
+#
+# Sanity check --no-output mode.
+# RUN: %{llbuild} buildsystem parse --no-output %s > %t2.out
+# RUN: wc -c < %t2.out > %t2.out.size
+# RUN: %{FileCheck} < %t2.out.size %s --check-prefix CHECK-NO-OUT-SIZE
+#
+# CHECK-NO-OUT-SIZE: {{^ *0$}}
+
+# Declare the client information.
+#
+# CHECK: client ('example-client', version: 1)
+# CHECK:  -- 'extra-key': 'extra-value'
+client:
+  name: example-client
+  version: 1
+  extra-key: extra-value
+
+# Define the tools.
+#
+# CHECK: tool('cc')
+# CHECK:  -- 'enable-dependencies': 'True'
+# CHECK:  -- 'cwd': '/tmp/example'
+# CHECK: tool('link')
+# CHECK:  -- 'cwd': '/tmp/example'
+tools:
+  cc:
+    enable-dependencies: True
+    cwd: /tmp/example
+  link:
+    cwd: /tmp/example
+
+# Define the targets.
+#
+# CHECK: target('hello')
+# CHECK:  -- nodes: ['hello']
+targets:
+  hello: ["hello"]
+
+# Define properties on nodes.
+#
+# CHECK: node('hello.o')
+# CHECK:  -- 'hash-content': 'True'
+nodes:
+  hello:
+    hash-content: True
+  hello.o:
+    hash-content: True
+
+# Define the commands.
+#
+# CHECK: command('link-hello')
+# CHECK:  -- 'tool': 'link'
+# CHECK:  -- 'description': 'LINK'
+# CHECK:  -- 'inputs': ['hello.o']
+# CHECK:  -- 'outputs': ['hello']
+# CHECK:  -- -- loaded command('link-hello')
+# CHECK: command('cc-hello.o')
+# CHECK:  -- 'tool': 'cc'
+# CHECK:  -- 'inputs': ['hello.c']
+# CHECK:  -- 'outputs': ['hello.o']
+# CHECK:  -- 'args': ['-O0']
+commands:
+  link-hello:
+    tool: link
+    description: LINK
+    inputs: ["hello.o"]
+    outputs: ["hello"]
+  cc-hello.o:
+    tool: cc
+    inputs: ["hello.c"]
+    outputs: ["hello.o"]
+    args: ["-O0"]
