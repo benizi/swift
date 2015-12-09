@@ -19,3 +19,6 @@ RUN curl -so /targz https://swift.org/builds/ubuntu1510/swift-2.2-SNAPSHOT-2015-
 WORKDIR /src
 ENV PATH="/swift/bin:$PATH"
 CMD bash
+
+ADD stringtest.swift /
+ADD test /
