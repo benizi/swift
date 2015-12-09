@@ -67,7 +67,7 @@ initreadline(void)
 #ifndef LLDB_DISABLE_LIBEDIT
     PyOS_ReadlineFunctionPointer = simple_readline;
 #endif
-    Py_InitModule4(
+    Py_InitModule4_64(
         "readline",
         moduleMethods,
         moduleDocumentation,

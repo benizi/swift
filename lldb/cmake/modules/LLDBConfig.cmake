@@ -182,6 +182,7 @@ if (NOT LLDB_DISABLE_PYTHON)
       add_definitions( -DLLDB_PYTHON_HOME="${LLDB_PYTHON_HOME}" )
     endif()
   else()
+    set(Python_ADDITIONAL_VERSIONS 2.7)
     find_package(PythonLibs REQUIRED)
   endif()
   
