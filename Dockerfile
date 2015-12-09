@@ -1,5 +1,5 @@
 # ubuntu:15.10 at some point in time:
-FROM ubuntu@2804d41e7f10
+FROM ubuntu@sha256:ae24faeb7d968197008eb7fa6970d1aa90636963947fe3486af27b079cccfb17
 
 RUN gpg --keyserver hkp://pool.sks-keyservers.net \
   --recv-keys \
