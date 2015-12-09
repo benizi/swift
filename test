@@ -1,2 +1,3 @@
 #!/bin/sh
-swift /stringtest.swift
+swiftc /stringtest.swift
+./stringtest

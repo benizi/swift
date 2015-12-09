@@ -1,2 +1,3 @@
-let yup = "abc".hasPrefix("ab")
+import Foundation
+let yup = "abc".hasSuffix("bc")
 print("No bugs here")
