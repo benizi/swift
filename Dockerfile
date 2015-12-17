@@ -17,3 +17,4 @@ CMD bash
 
 ADD stringtest.swift /
 ADD test /
+ADD repl /
